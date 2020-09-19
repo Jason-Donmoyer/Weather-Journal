@@ -17,12 +17,27 @@ app.use(bodyParser.json());
 
 // Cors for cross origin allowance
 const cors = require('cors');
+app.use(cors());
 
 // Initialize the main project folder
 app.use(express.static('website'));
 
 
 // Setup Server
-app.listen('3000', () => {
+
+app.listen(3000, () => {
   console.log('Serving up good some good shit!');
+});
+
+// Initialize all route with a callback function
+
+app.get('/all', (req, res) => {
+  res.send(JSON.stringify(projectData));
+});
+
+app.post('/', (req, res) => {
+  projectData.temp = req.body.temperature;
+  projectData.date = req.body.date;
+  projectData.userInput = '';
+  res.end();
 });
