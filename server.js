@@ -32,12 +32,17 @@ app.listen(3000, () => {
 // Initialize all route with a callback function
 
 app.get('/all', (req, res) => {
+  // res.send(JSON.stringify(projectData));
   res.send(JSON.stringify(projectData));
+  console.log('Get Get Get');
+
 });
 
 app.post('/', (req, res) => {
-  projectData.temp = req.body.temperature;
+  projectData.temp = req.body.temp;
   projectData.date = req.body.date;
-  projectData.userInput = '';
+  projectData.feelings = req.body.feelings;
+  console.log('Post Post Post');
+  console.log(projectData);
   res.end();
 });
