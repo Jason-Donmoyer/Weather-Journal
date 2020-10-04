@@ -16,7 +16,7 @@ const postUrl = 'http://localhost:3000/all';
 
 // Create a new date instance dynamically with JS
 let d = new Date();
-let newDate = d.getMonth() + '.' + d.getDate() + '.' + d.getFullYear();
+let newDate = (d.getMonth() + 1) + '.' + d.getDate() + '.' + d.getFullYear();
 
 // Function to call API and get data
 
@@ -25,7 +25,7 @@ const getWeather = async (apiUrl, zipCode, APIKey) => {
   try {
     const res = await fetch(url);
     let JSONData = await res.json();
-    console.log(JSONData);
+    // console.log(JSONData);
     // console.log(JSONData.main.temp);
     return JSONData;
   } catch (error) {
@@ -60,26 +60,40 @@ const postData = async (url, data) => {
 const updateUserInterface = async () => {
   const resData = await fetch(postUrl);
   let jsonData = await resData.json();
-  date.innerHTML = jsonData.date;
-  temp.innerHTML = jsonData.temp;
+  date.innerHTML = `The current date is ${jsonData.date}`;
+  temp.innerHTML = `The temperature for your area is ${jsonData.temp} degrees F`;
+  content.innerHTML = `Looks like you\'re feeling ${jsonData.feelings}`;
+
+  document.getElementById('entryHolder').style.display = 'grid';
+  date.style.zIndex = 1;
+  temp.style.zIndex = 1;
+  content.style.zIndex = 1;
+
+
   console.log(temp);
+  //alert(`The current temperature is ${jsonData.temp} \nThe current data is ${jsonData.date} \nAnd I am feeling ${jsonData.feelings}!`);
 }
 
 
 // Main Function
 
 const initiateProgram = async function () {
-  const newData = await getWeather(apiUrl, zipCode.value, APIKey);
-  const weatherData = {
-    temp: newData.main.temp,
-    date: newDate,
-    feelings: feelings.value
-  }
-  console.log(weatherData);
+  if (zipCode.value.length !== 5 || feelings.value === '') {
+    alert('Please enter valid data!');
+  } else {
+    const newData = await getWeather(apiUrl, zipCode.value, APIKey);
+    const weatherData = {
+      temp: newData.main.temp,
+      date: newDate,
+      feelings: feelings.value
+    }
+    console.log(weatherData);
 
-  await postData('http://localhost:3000/', weatherData)
-  console.log(weatherData.temp);
-  updateUserInterface();
+
+    await postData('http://localhost:3000/', weatherData)
+    // console.log(weatherData.temp);
+    updateUserInterface();
+  }
 }
 
 // Event Listener 
