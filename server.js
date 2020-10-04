@@ -25,8 +25,10 @@ app.use(express.static('website'));
 
 // Setup Server
 
-app.listen(3000, () => {
-  console.log('Serving up good some good shit!');
+const PORT = 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server is up and running on port ${PORT}`);
 });
 
 // Initialize all route with a callback function
@@ -34,7 +36,7 @@ app.listen(3000, () => {
 app.get('/all', (req, res) => {
   // res.send(JSON.stringify(projectData));
   res.send(JSON.stringify(projectData));
-  console.log('Get Get Get');
+  console.log('Get route called');
 
 });
 
@@ -42,7 +44,6 @@ app.post('/', (req, res) => {
   projectData.temp = req.body.temp;
   projectData.date = req.body.date;
   projectData.feelings = req.body.feelings;
-  console.log('Post Post Post');
-  console.log(projectData);
+  console.log('Post route called');
   res.end();
 });
