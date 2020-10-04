@@ -53,6 +53,7 @@ const updateUserInterface = async () => {
   date.innerHTML = `The current date is ${jsonData.date}`;
   temp.innerHTML = `The temperature for your area is ${jsonData.temp} degrees F`;
   content.innerHTML = `Looks like you\'re feeling ${jsonData.feelings}`;
+  feelings.value = '';
 
   entryHolder.style.display = 'grid';
   date.style.zIndex = 1;
@@ -73,8 +74,6 @@ const initiateProgram = async function () {
       date: newDate,
       feelings: feelings.value
     }
-    console.log(weatherData);
-
 
     await postData('http://localhost:3000/', weatherData)
     updateUserInterface();

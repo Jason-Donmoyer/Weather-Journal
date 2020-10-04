@@ -28,17 +28,18 @@ app.use(express.static('website'));
 const PORT = 3000;
 
 app.listen(PORT, () => {
-  console.log(`Server is up and running on port ${PORT}`);
+  console.log(`Server is listening on port ${PORT}`);
 });
 
-// Initialize all route with a callback function
+// GET route for /all route
 
 app.get('/all', (req, res) => {
-  // res.send(JSON.stringify(projectData));
   res.send(JSON.stringify(projectData));
   console.log('Get route called');
 
 });
+
+// POST route
 
 app.post('/', (req, res) => {
   projectData.temp = req.body.temp;
